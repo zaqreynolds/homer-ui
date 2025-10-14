@@ -1,0 +1,71 @@
+export type Seconds = number;
+export type ISODateString = string; // e.g., "2023-10-05T14:48:00.000Z"
+
+export type Set = {
+  id: string;
+  exerciseId: string;
+  order: number;
+  reps?: number;
+  repsRange?: [number, number];
+  duration?: Seconds;
+  weight?: number; // in kg
+  weightUnit?: "kg" | "lbs";
+  restTime?: Seconds;
+  comments?: string;
+  notes?: string;
+  completed: boolean;
+  status?: "not_started" | "in_progress" | "completed";
+  createdAt: ISODateString;
+  updatedAt: ISODateString;
+};
+
+export type Exercise = {
+  id: string;
+  workoutId: string;
+  circuitId?: string; // if part of a circuit
+  name: string;
+  order: number;
+  type: "strength" | "cardio" | "flexibility" | "balance";
+  muscleGroups: string[]; // e.g., ['chest', 'triceps']
+  equipment?: string[]; // e.g., ['dumbbell', 'barbell']
+  instructions?: string;
+  videoUrl?: string;
+  notes?: string;
+  comments?: string;
+  sets: Set[];
+  completed: boolean;
+  status?: "not_started" | "in_progress" | "completed";
+  createdAt: ISODateString;
+  updatedAt: ISODateString;
+};
+
+export type Circuit = {
+  id: string;
+  workoutId: string;
+  name: string;
+  order: number;
+  exercises: Exercise[];
+  rounds: number;
+  restBetweenExercises?: Seconds;
+  restBetweenRounds?: Seconds;
+  notes?: string;
+  comments?: string;
+  completed: boolean;
+  status?: "not_started" | "in_progress" | "completed";
+  createdAt: ISODateString;
+  updatedAt: ISODateString;
+};
+
+export type Workout = {
+  id: string;
+  name: string;
+  notes?: string;
+  tags?: string[]; // e.g., ['full_body', 'upper_body']
+  duration?: Seconds; // total planned duration
+  exercises: Exercise[];
+  circuits: Circuit[];
+  completed: boolean;
+  status?: "not_started" | "in_progress" | "completed";
+  createdAt: ISODateString;
+  updatedAt: ISODateString;
+};
