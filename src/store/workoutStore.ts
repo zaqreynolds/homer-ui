@@ -11,6 +11,9 @@ const updateNested = <T extends { id: string }>(
 
 export type WorkoutStore = {
   workouts: Workout[];
+  draftWorkout: Partial<Workout> | null;
+  setDraftWorkout: (updates: Partial<Workout> | null) => void;
+  clearDraftWorkout: () => void;
   addWorkout: (name: string) => void;
   removeWorkout: (id: string) => void;
   updateWorkout: (id: string, updates: Partial<Workout>) => void;
@@ -44,6 +47,11 @@ export type WorkoutStore = {
 
 export const useWorkoutStore = create<WorkoutStore>((set) => ({
   workouts: [],
+  draftWorkout: null,
+
+  setDraftWorkout: (updates) => set({ draftWorkout: updates }),
+
+  clearDraftWorkout: () => set({ draftWorkout: null }),
 
   addWorkout: (name: string) =>
     set((state) => ({

@@ -116,4 +116,22 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1 {
+    @apply text-4xl font-bold tracking-tight mb-4;
+  }
+  h2 {
+    @apply text-3xl font-semibold tracking-tight mb-3;
+  }
+  h3 {
+    @apply text-2xl font-semibold tracking-tight mb-2;
+  }
+  h4 {
+    @apply text-xl font-medium tracking-tight mb-1;
+  }
+  h5 {
+    @apply text-lg font-medium tracking-tight;
+  }
+  h6 {
+    @apply text-base font-medium tracking-tight;
+  }
 }
