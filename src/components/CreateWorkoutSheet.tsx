@@ -55,7 +55,9 @@ export const CreateWorkoutSheet = () => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button onClick={() => setOpen(true)}>Create Workout</Button>
+        <Button onClick={() => setOpen(true)} size="lg" className="w-60">
+          Create Workout
+        </Button>
       </SheetTrigger>
       <SheetContent
         side="bottom"

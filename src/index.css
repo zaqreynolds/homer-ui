@@ -135,26 +135,3 @@
     @apply text-base font-medium tracking-tight;
   }
 }
-
-[data-state="open"] .radix-overlay {
-  animation: fadeIn 0.3s ease-out;
-}
-[data-state="closed"] .radix-overlay {
-  animation: fadeOut 0.2s ease-in;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}

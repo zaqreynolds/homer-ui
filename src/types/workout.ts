@@ -69,3 +69,42 @@ export type Workout = {
   createdAt: ISODateString;
   updatedAt: ISODateString;
 };
+
+export type CreateSet = {
+  reps?: number;
+  repsRange?: [number, number];
+  duration?: Seconds;
+  weight?: number;
+  weightUnit?: "kg" | "lbs";
+  restTime?: Seconds;
+  notes?: string;
+};
+
+export type CreateExercise = {
+  name: string;
+  type: "strength" | "cardio" | "flexibility" | "balance";
+  muscleGroups: string[];
+  equipment?: string[];
+  instructions?: string;
+  videoUrl?: string;
+  notes?: string;
+  sets: CreateSet[];
+};
+
+export type CreateCircuit = {
+  name: string;
+  rounds: number;
+  restBetweenExercises?: Seconds;
+  restBetweenRounds?: Seconds;
+  notes?: string;
+  exercises: CreateExercise[];
+};
+
+export type CreateWorkout = {
+  name: string;
+  notes?: string;
+  tags?: string[];
+  duration?: Seconds;
+  exercises: CreateExercise[];
+  circuits: CreateCircuit[];
+};
