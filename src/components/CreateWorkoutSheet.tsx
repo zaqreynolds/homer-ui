@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import {
   Sheet,
   SheetContent,
@@ -10,9 +12,9 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useWorkoutStore } from "@/store/workoutStore";
 import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
-import { useNavigate } from "@tanstack/react-router";
+import { Label } from "./ui/label";
+
 type CreateWorkoutFormValues = {
   name: string;
   tags?: string[];
@@ -26,7 +28,6 @@ export const CreateWorkoutSheet = () => {
 
   const {
     control,
-    register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
@@ -52,6 +53,7 @@ export const CreateWorkoutSheet = () => {
     setOpen(false);
     navigate({ to: "/workouts/new" });
   };
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
@@ -70,17 +72,29 @@ export const CreateWorkoutSheet = () => {
           </SheetDescription>
         </SheetHeader>
 
-        <form className="flex flex-col gap-6 mt-6">
+        <form
+          className="flex flex-col gap-6 mt-6"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="space-y-2">
             <div className="mb-4">
-              <label htmlFor="name" className="text-sm font-medium">
+              <Label htmlFor="name" className="text-sm font-medium">
                 Workout Name
-              </label>
-              <Input
-                {...register("name", { required: "Workout name is required" })}
-                autoComplete="off"
-                className="h-9 text-sm"
+              </Label>
+              <Controller
+                name="name"
+                control={control}
+                rules={{ required: "Workout name is required" }}
+                render={({ field }) => (
+                  <Input
+                    id="name"
+                    {...field}
+                    autoComplete="off"
+                    className="h-9 text-sm"
+                  />
+                )}
               />
+
               {errors.name && (
                 <span className="text-sm text-red-600">
                   {errors.name.message}
@@ -91,7 +105,7 @@ export const CreateWorkoutSheet = () => {
             <div className="space-y-3">
               <div className="space-y-2">
                 {" "}
-                <label className="text-sm font-medium">Workout Tags</label>
+                <Label className="text-sm font-medium">Workout Tags</Label>
                 <Input
                   placeholder="Search tags... "
                   value={tagSearch}
@@ -137,6 +151,7 @@ export const CreateWorkoutSheet = () => {
               {/* You can add a tags select here later */}
               <Button
                 type="submit"
+                size="lg"
                 className="mt-2 w-full"
                 onClick={handleSubmit(onSubmit)}
                 disabled={isSubmitting}
