@@ -92,6 +92,7 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
           {
             id: nanoid(),
             workoutId,
+            phase: "main",
             name: exerciseName,
             order: workout.exercises.length + 1,
             type: "strength",
@@ -141,6 +142,7 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
           {
             id: nanoid(),
             workoutId,
+            phase: "main",
             name: circuitName,
             order: (workout.circuits?.length ?? 0) + 1,
             exercises: [],

@@ -6,10 +6,9 @@ export type Set = {
   exerciseId: string;
   order: number;
   reps?: number;
-  repsRange?: [number, number];
+  targetReps?: number;
   duration?: Seconds;
   weight?: number; // in kg
-  weightUnit?: "kg" | "lbs";
   restTime?: Seconds;
   comments?: string;
   notes?: string;
@@ -23,11 +22,14 @@ export type Exercise = {
   id: string;
   workoutId: string;
   circuitId?: string; // if part of a circuit
+  phase: "warmup" | "main" | "cooldown";
   name: string;
   order: number;
   type: "strength" | "cardio" | "flexibility" | "balance";
   muscleGroups: string[]; // e.g., ['chest', 'triceps']
   equipment?: string[]; // e.g., ['dumbbell', 'barbell']
+  isBodyweight?: boolean;
+  weightUnit?: "kg" | "lbs";
   instructions?: string;
   videoUrl?: string;
   notes?: string;
@@ -43,6 +45,7 @@ export type Circuit = {
   id: string;
   workoutId: string;
   name: string;
+  phase: "warmup" | "main" | "cooldown";
   order: number;
   exercises: Exercise[];
   rounds: number;
@@ -72,19 +75,21 @@ export type Workout = {
 
 export type CreateSet = {
   reps?: number;
-  repsRange?: [number, number];
+  targetReps?: number;
   duration?: Seconds;
   weight?: number;
-  weightUnit?: "kg" | "lbs";
   restTime?: Seconds;
   notes?: string;
 };
 
 export type CreateExercise = {
   name: string;
+  phase: "warmup" | "main" | "cooldown";
   type: "strength" | "cardio" | "flexibility" | "balance";
   muscleGroups: string[];
   equipment?: string[];
+  isBodyweight?: boolean;
+  weightUnit?: "kg" | "lbs";
   instructions?: string;
   videoUrl?: string;
   notes?: string;
@@ -93,6 +98,7 @@ export type CreateExercise = {
 
 export type CreateCircuit = {
   name: string;
+  phase: "warmup" | "main" | "cooldown";
   rounds: number;
   restBetweenExercises?: Seconds;
   restBetweenRounds?: Seconds;

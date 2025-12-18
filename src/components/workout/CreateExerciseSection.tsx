@@ -18,17 +18,19 @@ export const CreateExerciseSection = () => {
     const newIndex = fields.length;
     const blankExercise: CreateExercise = {
       name: "",
+      phase: "main",
       type: "strength",
       muscleGroups: [],
       equipment: [],
       instructions: "",
       videoUrl: "",
       notes: "",
+      isBodyweight: false,
+      weightUnit: "lbs",
       sets: [
         {
           reps: undefined,
           weight: undefined,
-          weightUnit: "lbs",
           duration: undefined,
           restTime: undefined,
           notes: "",

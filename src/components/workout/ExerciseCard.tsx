@@ -6,14 +6,8 @@ import { Card } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
+import { CreateSetsSection } from "./CreateSetSection";
 
 type Props = {
   index: number;
@@ -30,15 +24,19 @@ export const ExerciseCard = ({
   onDoneEditing,
   onRemove,
 }: Props) => {
-  const { control, watch } = useFormContext<CreateWorkout>();
+  const { control, watch, trigger, formState } =
+    useFormContext<CreateWorkout>();
 
   const name = watch(`exercises.${index}.name`);
   const type = watch(`exercises.${index}.type`);
   const notes = watch(`exercises.${index}.notes`);
   const sets = watch(`exercises.${index}.sets`) ?? [];
 
-  const handleSave = () => {
-    // values are already in RHF via Controller fields
+  const handleSave = async () => {
+    const isValid = await trigger(`exercises.${index}` as const, {
+      shouldFocus: true,
+    });
+    if (!isValid) return;
     onDoneEditing();
   };
 
@@ -47,8 +45,10 @@ export const ExerciseCard = ({
     onDoneEditing();
   };
 
+  console.log("fieldstate errors:", formState.errors);
+
   return (
-    <Card className="p-4 space-y-3">
+    <Card className="p-4">
       {/* VIEW MODE */}
       {!isEditing && (
         <div className="space-y-2">
@@ -86,8 +86,47 @@ export const ExerciseCard = ({
 
       {/* EDIT MODE */}
       {isEditing && (
-        <div className="space-y-3">
+        <div className="flex flex-col gap-3">
           {/* Name */}
+          <div className="space-y-1">
+            <Label className="text-xs font-medium">Phase</Label>
+            <p className="text-[10px] text-muted-foreground">
+              Choose where this exercise fits in the workout.
+            </p>
+
+            <Controller
+              name={`exercises.${index}.phase`}
+              control={control}
+              render={({ field }) => (
+                <ToggleGroup
+                  type="single"
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  // 👇 one pill-shaped container, no gaps
+                  className="inline-flex w-full overflow-hidden rounded-full border bg-muted"
+                >
+                  {PHASES.map((phase, i) => (
+                    <ToggleGroupItem
+                      key={phase.value}
+                      value={phase.value}
+                      // 👇 equal-width segments, with inner dividers
+                      className={[
+                        "flex-1 px-2 py-2 text-[11px] sm:text-xs",
+                        "data-[state=on]:bg-primary data-[state=on]:text-primary-foreground",
+                        "data-[state=off]:text-muted-foreground",
+                        i !== 0 ? "border-l border-border" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                    >
+                      {phase.label}
+                    </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
+              )}
+            />
+          </div>
+
           <div className="space-y-1">
             <Label className="text-xs font-medium">Exercise name</Label>
             <Controller
@@ -99,6 +138,7 @@ export const ExerciseCard = ({
                   {...field}
                   className="h-9 text-sm"
                   autoFocus
+                  autoComplete="off"
                   placeholder="e.g. Barbell Bench Press"
                 />
               )}
@@ -132,6 +172,8 @@ export const ExerciseCard = ({
             />
           </div>
 
+          {/* # of Sets */}
+
           {/* Notes */}
           <div className="space-y-1">
             <Label className="text-xs font-medium">Notes</Label>
@@ -149,6 +191,7 @@ export const ExerciseCard = ({
           </div>
 
           {/* TODO: Sets editor will go here later */}
+          <CreateSetsSection exerciseIndex={index} />
 
           <div className="flex justify-end gap-2 pt-2">
             <Button
@@ -168,5 +211,9 @@ export const ExerciseCard = ({
     </Card>
   );
 };
-
+const PHASES = [
+  { value: "warmup", label: "Warm-up" },
+  { value: "main", label: "Main" },
+  { value: "cooldown", label: "Cool-down" },
+] as const;
 const WorkoutTypes = ["strength", "cardio", "flexibility", "balance"] as const;
