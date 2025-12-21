@@ -169,21 +169,28 @@ export const CreateWorkoutSheet = () => {
 const TAG_OPTIONS = [
   { value: "push", label: "Push" },
   { value: "pull", label: "Pull" },
-  { value: "legs", label: "Legs" },
   { value: "upper", label: "Upper" },
   { value: "lower", label: "Lower" },
-  { value: "chest", label: "Chest" },
-  { value: "back", label: "Back" },
-  { value: "biceps", label: "Biceps" },
-  { value: "triceps", label: "Triceps" },
-  { value: "arms", label: "Arms" },
-  { value: "shoulders", label: "Shoulders" },
-  { value: "quads", label: "Quads" },
-  { value: "hamstrings", label: "Hamstrings" },
-  { value: "glutes", label: "Glutes" },
-  { value: "calves", label: "Calves" },
-  { value: "core", label: "Core" },
-  { value: "full-body", label: "Full Body" },
+  { value: "full_body", label: "Full Body" },
+
+  // Focus / intent
+  { value: "strength", label: "Strength" },
+  { value: "hypertrophy", label: "Hypertrophy" },
+  { value: "conditioning", label: "Conditioning" },
   { value: "cardio", label: "Cardio" },
+  { value: "mobility", label: "Mobility" },
+  { value: "recovery", label: "Recovery" },
+  { value: "deload", label: "Deload" },
+
+  // Location / constraints
+  { value: "gym", label: "Gym" },
+  { value: "home", label: "Home" },
+  { value: "outdoors", label: "Outdoors" },
+
+  // Optional category buckets
+  { value: "arms", label: "Arms" },
+  { value: "legs", label: "Legs" },
+  { value: "core", label: "Core" },
+
   { value: "other", label: "Other" },
 ];

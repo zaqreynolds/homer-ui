@@ -11,7 +11,6 @@ export type Set = {
   weight?: number; // in kg
   restTime?: Seconds;
   comments?: string;
-  notes?: string;
   completed: boolean;
   status?: "not_started" | "in_progress" | "completed";
   createdAt: ISODateString;
@@ -79,7 +78,6 @@ export type CreateSet = {
   duration?: Seconds;
   weight?: number;
   restTime?: Seconds;
-  notes?: string;
 };
 
 export type CreateExercise = {

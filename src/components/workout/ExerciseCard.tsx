@@ -217,3 +217,23 @@ const PHASES = [
   { value: "cooldown", label: "Cool-down" },
 ] as const;
 const WorkoutTypes = ["strength", "cardio", "flexibility", "balance"] as const;
+
+const MUSCLE_GROUP_OPTIONS = [
+  { value: "chest", label: "Chest" },
+  { value: "back", label: "Back" },
+  { value: "shoulders", label: "Shoulders" },
+  { value: "traps", label: "Traps" },
+  { value: "lats", label: "Lats" },
+  { value: "biceps", label: "Biceps" },
+  { value: "triceps", label: "Triceps" },
+  { value: "forearms", label: "Forearms" },
+  { value: "abs", label: "Abs" },
+  { value: "obliques", label: "Obliques" },
+  { value: "lower_back", label: "Lower Back" },
+  { value: "spinal_erectors", label: "Spinal Erectors" },
+  { value: "quads", label: "Quads" },
+  { value: "hamstrings", label: "Hamstrings" },
+  { value: "glutes", label: "Glutes" },
+  { value: "calves", label: "Calves" },
+  { value: "full_body", label: "Full Body" },
+];

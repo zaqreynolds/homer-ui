@@ -6,12 +6,15 @@ import { Label } from "../ui/label";
 import { Copy, Trash2 } from "lucide-react";
 import { Switch } from "../ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
+import { useRef } from "react";
 
 type Props = {
   exerciseIndex: number;
 };
 
 export function CreateSetsSection({ exerciseIndex }: Props) {
+  const repsRefs = useRef<HTMLInputElement[]>([]);
+
   const { control, getValues } = useFormContext<CreateWorkout>();
 
   const { fields, append, remove, insert } = useFieldArray({
@@ -37,13 +40,16 @@ export function CreateSetsSection({ exerciseIndex }: Props) {
       weight: undefined,
       duration: undefined,
       restTime: undefined,
-      notes: "",
     });
+
+    setTimeout(() => {
+      const lastIndex = fields.length;
+      repsRefs.current[lastIndex]?.focus();
+    }, 0);
   };
 
   return (
     <div className="space-y-2">
-      <Label className="text-xs font-medium">Sets ({fields.length})</Label>
       <div className="flex items-center gap-4">
         <Controller
           name={`exercises.${exerciseIndex}.isBodyweight`}
@@ -83,6 +89,7 @@ export function CreateSetsSection({ exerciseIndex }: Props) {
           )}
         />
       </div>
+      <Label className="text-xs font-medium">Sets ({fields.length})</Label>
       <div className="space-y-2">
         {fields.map((field, setIndex) => (
           <div
@@ -128,6 +135,9 @@ export function CreateSetsSection({ exerciseIndex }: Props) {
                       <Label className="text-xs font-medium">Reps</Label>
                       <Input
                         {...field}
+                        ref={(el) => {
+                          if (el) repsRefs.current[setIndex] = el;
+                        }}
                         type="number"
                         inputMode="numeric"
                         className="h-8 text-xs"
@@ -156,6 +166,8 @@ export function CreateSetsSection({ exerciseIndex }: Props) {
                         type="number"
                         inputMode="decimal"
                         className="h-8 text-xs"
+                        autoComplete="off"
+                        aria-invalid={!!fieldState.error}
                       />
                       <p className="h-4 text-[10px] text-red-500">
                         {fieldState.error ? fieldState.error.message : null}

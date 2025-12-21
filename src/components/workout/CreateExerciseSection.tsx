@@ -33,7 +33,6 @@ export const CreateExerciseSection = () => {
           weight: undefined,
           duration: undefined,
           restTime: undefined,
-          notes: "",
         },
       ],
     };
